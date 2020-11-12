@@ -1,0 +1,24 @@
+QTabWidget::pane
+{
+    border-top: none;
+    background-color: rgb(10, 10, 15);
+}
+
+QTabBar::tab 
+{
+    background-color: rgb(10, 10, 15);
+    min-width: 8ex;
+    width: 150px;
+    padding: 5px;
+    color: white;
+}
+
+QTabBar::tab::selected
+{
+    font-weight: bold;
+}
+
+QTabBar::tab::hover
+{
+    color: yellow;
+}
