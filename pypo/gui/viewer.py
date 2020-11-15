@@ -3,8 +3,9 @@ from gui.views.observer import Observer
 
 class Viewer(QTabWidget):
 
-    def __init__(self, *argv, **kwargs):
-        super(Viewer, self).__init__(*argv, **kwargs)
-        self.observer = Observer()
+    def __init__(self, parent = None):
+        super(Viewer, self).__init__(parent = parent)
+        
+        self.observer = Observer(parent = self)
         
         self.addTab(self.observer, "Point Cloud Observer")

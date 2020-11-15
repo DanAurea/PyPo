@@ -1,12 +1,18 @@
+QMainWindow, QMenuBar, QMenu
+{
+    background : rgb(28, 28, 40);
+    color: white;
+}
+
 QTabWidget::pane
 {
     border-top: none;
-    background-color: rgb(10, 10, 15);
+    background-color:rgb(18, 18, 25);
 }
 
 QTabBar::tab 
 {
-    background-color: rgb(10, 10, 15);
+    background-color: rgb(18, 18, 25);
     min-width: 8ex;
     width: 150px;
     padding: 5px;
@@ -20,5 +26,5 @@ QTabBar::tab::selected
 
 QTabBar::tab::hover
 {
-    color: yellow;
+    color: rgb(233, 226, 110);
 }
