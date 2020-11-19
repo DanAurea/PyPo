@@ -4,5 +4,6 @@
                 "major":0,
                 "minor": 1
             },
-"style": "default"
+"style": "default",
+"debug": true
 }

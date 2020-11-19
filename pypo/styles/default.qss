@@ -1,30 +1,65 @@
-QMainWindow, QMenuBar, QMenu
+QDockWidget, QMainWindow, QMenuBar, QMenu, QTabBar::tab
 {
-    background : rgb(28, 28, 40);
-    color: white;
+    color : white;
+}
+
+QDockWidget, QTabBar::tab::selected
+{
+    font-weight : bold;
+}
+
+QTabWidget::tab
+{
+    background: rgb(23, 23, 37);    
+}
+
+QDockWidget::title
+{
+    padding: 5px;
+}
+
+QDockWidget::title, QMainWindow, QMenuBar, QMenu
+{
+    background : rgb(42, 42, 54);
+}
+
+QSplitter::handle
+{
+    background : rgb(75, 75, 95);
+    height: 2px;
+}
+
+QTabWidget::pane, QTabBar::tab::selected
+{    
+    background:rgb(28, 28, 35);
 }
 
 QTabWidget::pane
 {
     border-top: none;
-    background-color:rgb(18, 18, 25);
 }
 
 QTabBar::tab 
 {
-    background-color: rgb(18, 18, 25);
     min-width: 8ex;
     width: 150px;
     padding: 5px;
-    color: white;
-}
-
-QTabBar::tab::selected
-{
-    font-weight: bold;
 }
 
 QTabBar::tab::hover
 {
-    color: rgb(233, 226, 110);
+    color: rgb(255, 236, 150);
+}
+
+QPushButton#play
+{
+    width : 24px;
+    height: 24px;
+    background: url("../res/icons/play.png") no-repeat center;
+    border: none;
+}
+
+QPushButton#play::hover
+{
+    background: url("../res/icons/play_hover.png") no-repeat center;
 }

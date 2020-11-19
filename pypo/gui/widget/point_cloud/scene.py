@@ -4,17 +4,37 @@ from PySide2.QtCore import Qt, QEvent
 from PySide2.QtWidgets import QOpenGLWidget
 
 from scene.camera.camera import Camera2D, Camera3D
+from scene.camera.camera_3d.fly_camera import FlyCamera
+from scene.camera.camera_3d.fps_camera import FPSCamera
 
 class Scene(QOpenGLWidget):
 
     def __init__(self, parent = None):
         super(Scene, self).__init__(parent = parent)
+        
+        self._cameras         = []
         self._control_binding = {}
-        self._key_pressed = set()
+        self._key_pressed     = set()
+
+        self._framerate   = 60
+        self._invalid     = True
+        self._auto_update = True
 
         self.setFocusPolicy(Qt.StrongFocus)
 
-        self._invalid = True
+    @property
+    def auto_update(self):
+        return self._auto_update
+
+    @auto_update.setter
+    def auto_update(self, state):
+        self._auto_update = state
+
+    def add_object(self):
+        pass
+
+    def render(self):
+        pass
 
     def initializeGL(self):
         glClearColor(0.04, 0.04, 0.06, 1.0)
@@ -48,17 +68,20 @@ class Scene2D(Scene):
     def __init__(self, parent = None):
         super(Scene2D, self).__init__(parent = parent)
 
-        self._camera = Camera2D()
+        self._cameras.append(Camera2D())
+        
+        self._current_camera = self._cameras[0]
+
         self._bind_controls()
 
     def _bind_controls(self):
         """
         Bind input controls to callback function
         """
-        self._control_binding[Qt.Key_Z] = self._camera.move_forward
-        self._control_binding[Qt.Key_S] = self._camera.move_backward
-        self._control_binding[Qt.Key_Q] = self._camera.move_left
-        self._control_binding[Qt.Key_D] = self._camera.move_right
+        self._control_binding[Qt.Key_Z] = self._current_camera.move_forward
+        self._control_binding[Qt.Key_S] = self._current_camera.move_backward
+        self._control_binding[Qt.Key_Q] = self._current_camera.move_left
+        self._control_binding[Qt.Key_D] = self._current_camera.move_right
 
     def keyPressEvent(self, event):
         super(Scene2D, self).keyPressEvent(event)
@@ -88,17 +111,19 @@ class Scene3D(Scene):
     def __init__(self, parent = None):
         super(Scene3D, self).__init__(parent = parent)
 
-        self._camera = Camera3D()
+        self._cameras.append(FlyCamera())
+        self._current_camera = self._cameras[0]
+
         self._bind_controls()
 
     def _bind_controls(self):
         """
         Bind input controls to callback function
         """
-        self._control_binding[Qt.Key_Z] = self._camera.move_forward
-        self._control_binding[Qt.Key_S] = self._camera.move_backward
-        self._control_binding[Qt.Key_Q] = self._camera.move_left
-        self._control_binding[Qt.Key_D] = self._camera.move_right
+        self._control_binding[Qt.Key_Z] = self._current_camera.move_forward
+        self._control_binding[Qt.Key_S] = self._current_camera.move_backward
+        self._control_binding[Qt.Key_Q] = self._current_camera.move_left
+        self._control_binding[Qt.Key_D] = self._current_camera.move_right
 
     def keyPressEvent(self, event):
         super(Scene3D, self).keyPressEvent(event)
