@@ -18,7 +18,7 @@ class ApplicationConfiguration(object):
 
         self.application_name  = "Python Point Observer (PyPo) : " + str(self.version["major"]) + "." + str(self.version["minor"])
         self.organization_name = "DanAurea"
-        self.style             = "styles/default.qss"
+        self.style             = "style/default.qss"
         self.debug             = False
 
     def load(self):
@@ -36,7 +36,7 @@ class ApplicationConfiguration(object):
             self.organization_name = self.settings["organization_name"]
 
         if "style" in self.settings:
-            with open("styles/" + self.settings["style"] + ".qss") as style:
+            with open("style/" + self.settings["style"] + ".qss") as style:
                 self.style = style.read()
 
         if "debug" in self.settings:

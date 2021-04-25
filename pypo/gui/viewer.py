@@ -7,7 +7,7 @@ class Viewer(QTabWidget):
         super(Viewer, self).__init__(parent = parent)
         
         self.plugins = [Observer()]
-        self._data   = None
+        self._record   = None
         self._debug  = False
 
     @property
@@ -19,13 +19,22 @@ class Viewer(QTabWidget):
         self._debug = state
 
     @property
-    def data(self):
-        return self._data
+    def record(self):
+        return self._record
     
-    @data.setter
-    def data(self, dataset):
-        self._data = dataset
-        self.render()
+    @record.setter
+    def record(self, dataset):
+        self._record = dataset
+        self.update()
+
+    def animate(self):
+        pass
+
+    def previous_frame(self):
+        pass
+    
+    def next_frame(self):
+        pass
 
     def show(self):
         """
@@ -35,9 +44,9 @@ class Viewer(QTabWidget):
             plugin.debug = self._debug
             self.addTab(plugin.view, plugin.name)
 
-    def render(self):
+    def update(self):
         """
-        Renders data in plugins visible.
+        Update state of current viewer.
         """
         for plugin in self.plugins:
             if plugin.view.isVisible():

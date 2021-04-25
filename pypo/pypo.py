@@ -1,6 +1,7 @@
 from PySide2.QtCore import Qt, QTimer
 from PySide2.QtWidgets import QAction, QApplication, QHBoxLayout, QMainWindow, QMenuBar, QPushButton, QStyle, QTabWidget, QWidget
 from core.configuration.application import ApplicationConfiguration
+from core.io.loader_factory import LoaderFactory
 from core.io.logger import Logger
 from gui.viewer import Viewer
 
@@ -18,7 +19,9 @@ class PyPo(QApplication):
         self.central_widget            = self._viewer
         
         self._logger                   = Logger()
-        
+        self._loader_factory           = LoaderFactory()
+        self._record                   = None
+
         self._menu_bar                 = self.main_window.menuBar()
         self.application_configuration.load()
     
@@ -29,14 +32,16 @@ class PyPo(QApplication):
         :param      event:  The event
         :type       event:  { type_description }
         """
-        
         mime_data = event.mimeData()
 
         if mime_data.hasUrls():
             urls = mime_data.urls()
-            
+
             for url in urls:
-                self.load(url.toLocalFile())
+                record = self._loader_factory.load(url.toLocalFile())
+
+            if record:
+                self._viewer.record = record
 
     def dragEnterEvent(self, event):
         """
@@ -105,7 +110,7 @@ class PyPo(QApplication):
         maximize_button = QPushButton(self._menu_bar)
         close_button    = QPushButton(self._menu_bar)
         
-        minimize_button.setIcon(minimize_icon)                                                          
+        minimize_button.setIcon(minimize_icon)
         maximize_button.setIcon(maximize_icon)
         close_button.setIcon(close_icon)
 
@@ -161,7 +166,7 @@ class PyPo(QApplication):
         QTimer.singleShot(0, self.main_window.showMaximized)
 
         if self.application_configuration.debug:
-            self._viewer.data = np.random.uniform(low=0.0, high=102.4, size = (15000,4)).astype('f')
+            self._viewer.record = np.random.uniform(low=0.0, high=102.4, size = (15000,4)).astype('f')
 
 if __name__ == '__main__':    
     pypo = PyPo(sys.argv)
