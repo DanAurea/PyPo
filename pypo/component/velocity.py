@@ -1,4 +1,4 @@
-class Velocity(object):
+class VelocityComponent(object):
     """
     Velocity component, used to describe movement speed of an entity.
     """
