@@ -168,7 +168,7 @@ class PyPo(QApplication):
         if self.application_configuration.debug:
             self._viewer.record = np.random.uniform(low=0.0, high=102.4, size = (15000,4)).astype('f')
 
-if __name__ == '__main__':    
+if __name__ == '__main__':
     pypo = PyPo(sys.argv)
     pypo.run()
 
